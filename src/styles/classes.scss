@@ -1,0 +1,202 @@
+@import 'styles/colors.scss';
+@import 'styles/variables.scss';
+
+.w-100 {
+  width: 100%;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.margin-top {
+  margin-top: $margin;
+}
+
+.margin-top-small {
+  margin-top: $margin-small;
+}
+
+.muted {
+  color: $grey-blue-light;
+}
+
+.va-middle {
+  vertical-align: middle;
+}
+
+.left-icon {
+  @extend .va-middle;
+  padding-right: $padding-xsmall;
+}
+
+.list-element {
+  margin: $margin 0;
+}
+
+/*
+Card
+*/
+
+.card {
+  background: $secondary-background;
+
+  padding: $padding-large;
+
+  margin: $margin 0;
+
+  // border: 1px solid $border-color;
+  border-radius: $border-radius;
+  box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+/*
+Buttons
+*/
+.button {
+  cursor: pointer;
+
+  // font-size: 0.9rem;
+  color: $color;
+  text-decoration: none;
+
+  font-size: 0.9em;
+  padding: 0;
+
+  &:focus {
+    outline: 0;
+    text-decoration: underline;
+  }
+
+  &.no-focus:focus {
+    outline: 0;
+    text-decoration: none;
+  }
+}
+
+.button-primary {
+  @extend .button;
+
+  border: 0;
+  border-radius: $border-radius;
+  color: $secondary-background;
+  background: $primary;
+
+  padding: 5px 10px;
+
+  &:hover {
+    background: $primary-darker;
+  }
+}
+
+.button-link {
+  @extend .button;
+
+  border: 0;
+  color: $grey-dark;
+
+  background: transparent;
+
+  &:hover {
+    color: $color;
+  }
+}
+
+.button-phantom {
+  @extend .button;
+
+  border: 0;
+  background: transparent;
+
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: 'Roboto', sans-serif;
+  text-align: inherit;
+}
+
+.button-group {
+  text-align: right;
+
+  > * {
+    margin-left: $margin;
+  }
+}
+
+/*
+Inputs
+*/
+
+.input-label {
+  margin-top: $margin;
+  margin-bottom: $margin-small;
+}
+
+.input-text {
+  display: block;
+  box-sizing: border-box;
+
+  background: $secondary-background;
+  border: 1px solid $grey-light;
+  border-radius: $border-radius;
+
+  padding: $padding;
+  font-size: inherit;
+
+  &:focus {
+    outline: 0;
+    border: 1px solid $primary;
+    // box-shadow: 0;
+  }
+}
+
+.input-text-phantom {
+  @extend .input-text;
+
+  border-left: 0;
+  border-top: 0;
+  border-right: 0;
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+
+  &:focus {
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
+  }
+}
+
+/*
+Flex
+*/
+
+.flex {
+  display: flex;
+}
+
+.flex-aligned {
+  @extend .flex;
+  align-items: center;
+}
+
+.flex-full-row {
+  @extend .flex-aligned;
+  justify-content: space-between;
+}
+
+/*
+Badges
+*/
+
+.badge {
+  font-size: 0.8em;
+  border-radius: 999px;
+  padding: $padding $padding-large;
+  font-weight: bold;
+}
+
+.badge-todo {
+  @extend .badge;
+  background-color: $grey-lightish;
+  color: $grey-dark;
+}

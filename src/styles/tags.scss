@@ -1,0 +1,15 @@
+@import 'styles/colors.scss';
+@import 'styles/variables.scss';
+
+ul {
+  // Remove the default style
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+li {
+  background: $secondary-background;
+  border-bottom: 1px solid $border-color;
+  padding: $padding;
+}
