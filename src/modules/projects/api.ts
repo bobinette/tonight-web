@@ -17,3 +17,8 @@ export const createTask = async (task: Task): Promise<Task> => {
   const resp = await api.post('/tasks', task);
   return resp.data.data;
 };
+
+export const markAsDone = async (task: Task): Promise<Task> => {
+  const resp = await api.post(`/tasks/${task.uuid}/done`);
+  return resp.data.data;
+};

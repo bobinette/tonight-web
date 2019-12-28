@@ -1,6 +1,11 @@
 import { Project, Task } from 'types';
 
-import { create, list, createTask as createTaskApi } from './api';
+import {
+  create,
+  list,
+  createTask as createTaskApi,
+  markAsDone as markAsDoneApi,
+} from './api';
 
 const createProjectAtomic = async (project: Project) => {
   await create(project);
@@ -21,5 +26,10 @@ export const loadProjects = async (setProjects: Function) => {
 
 export const createTask = async (task: Task, setProjects: Function) => {
   await createTaskApi(task);
+  await loadProjects(setProjects);
+};
+
+export const markAsDone = async (task: Task, setProjects: Function) => {
+  await markAsDoneApi(task);
   await loadProjects(setProjects);
 };

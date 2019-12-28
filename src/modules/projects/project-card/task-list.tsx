@@ -6,6 +6,7 @@ interface Props {
   project: Project;
 
   onCreate(task: Task): void;
+  onDone(task: Task): void;
 }
 
 const onKeyPress = (onCreate: Function) => (
@@ -16,7 +17,7 @@ const onKeyPress = (onCreate: Function) => (
   }
 };
 
-const TaskList: FC<Props> = ({ project, onCreate }) => {
+const TaskList: FC<Props> = ({ project, onCreate, onDone }) => {
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const tasks = project.tasks || [];
 
@@ -24,8 +25,16 @@ const TaskList: FC<Props> = ({ project, onCreate }) => {
     <>
       {tasks.map(task => (
         <div className="list-element" key={task.uuid!}>
-          <i className="material-icons left-icon">radio_button_unchecked</i>
-          {task.title}
+          {task.status === 'DONE' ? (
+            <i className="material-icons left-icon success">check_circle</i>
+          ) : (
+            <button className="button-phantom" onClick={() => onDone(task)}>
+              <i className="material-icons left-icon">radio_button_unchecked</i>
+            </button>
+          )}
+          <span className={`${task.status === 'DONE' ? 'success' : ''}`}>
+            {task.title}
+          </span>
         </div>
       ))}
       <div>

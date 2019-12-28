@@ -11,7 +11,7 @@ export const get = (
 
 export const post = (
   path: string,
-  data: any,
+  data?: any,
   config?: AxiosRequestConfig
 ): Promise<AxiosResponse<any>> => axios.post(`${baseUrl}${path}`, data, config);
 

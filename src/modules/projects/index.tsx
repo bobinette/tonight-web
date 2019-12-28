@@ -3,7 +3,7 @@ import { memoize } from 'lodash';
 
 import { Project, Task } from 'types';
 
-import { createProject, loadProjects, createTask } from './actions';
+import { createProject, loadProjects, createTask, markAsDone } from './actions';
 import CreateButton from './create-button';
 import ProjectCard from './project-card';
 
@@ -16,6 +16,10 @@ const createProjectCurried = memoize(
 
 const createTaskCurried = memoize((setProjects: Function) => (task: Task) =>
   createTask(task, setProjects)
+);
+
+const markAsDoneCurried = memoize((setProjects: Function) => (task: Task) =>
+  markAsDone(task, setProjects)
 );
 
 const ProjectList: FC<Props> = () => {
@@ -31,6 +35,7 @@ const ProjectList: FC<Props> = () => {
           key={project.uuid!}
           project={project}
           onCreateTask={createTaskCurried(setProjects)}
+          onDone={markAsDoneCurried(setProjects)}
         />
       ))}
       <div className="card">
