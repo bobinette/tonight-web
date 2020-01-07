@@ -8,9 +8,15 @@ interface Props {
   project: Project;
   onCreateTask(task: Task): void;
   onDone(task: Task): void;
+  onReorder(tasks: Task[]): void;
 }
 
-const ProjectCard: FC<Props> = ({ project, onCreateTask, onDone }) => {
+const ProjectCard: FC<Props> = ({
+  project,
+  onCreateTask,
+  onDone,
+  onReorder,
+}) => {
   const [showForm, setShowForm] = useState(false);
 
   return (
@@ -29,7 +35,12 @@ const ProjectCard: FC<Props> = ({ project, onCreateTask, onDone }) => {
         {project.tasks?.length || 0} tasks
       </div>
       {showForm && (
-        <TaskList project={project} onCreate={onCreateTask} onDone={onDone} />
+        <TaskList
+          project={project}
+          onCreate={onCreateTask}
+          onDone={onDone}
+          onReorder={onReorder}
+        />
       )}
     </div>
   );

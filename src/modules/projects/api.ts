@@ -22,3 +22,10 @@ export const markAsDone = async (task: Task): Promise<Task> => {
   const resp = await api.post(`/tasks/${task.uuid}/done`);
   return resp.data.data;
 };
+
+export const reorder = async (project: Project, tasks: Task[]) => {
+  const resp = await api.post(`/projects/${project.uuid}/tasks/ranks`, {
+    ranks: tasks.map(t => t.uuid),
+  });
+  return resp.data.data;
+};

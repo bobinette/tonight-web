@@ -5,6 +5,7 @@ import {
   list,
   createTask as createTaskApi,
   markAsDone as markAsDoneApi,
+  reorder as reorderApi,
 } from './api';
 
 const createProjectAtomic = async (project: Project) => {
@@ -31,5 +32,14 @@ export const createTask = async (task: Task, setProjects: Function) => {
 
 export const markAsDone = async (task: Task, setProjects: Function) => {
   await markAsDoneApi(task);
+  await loadProjects(setProjects);
+};
+
+export const reorder = async (
+  project: Project,
+  tasks: Task[],
+  setProjects: Function
+) => {
+  await reorderApi(project, tasks);
   await loadProjects(setProjects);
 };

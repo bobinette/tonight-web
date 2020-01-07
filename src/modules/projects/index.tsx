@@ -3,7 +3,13 @@ import { memoize } from 'lodash';
 
 import { Project, Task } from 'types';
 
-import { createProject, loadProjects, createTask, markAsDone } from './actions';
+import {
+  createProject,
+  loadProjects,
+  createTask,
+  markAsDone,
+  reorder,
+} from './actions';
 import CreateButton from './create-button';
 import ProjectCard from './project-card';
 
@@ -22,6 +28,11 @@ const markAsDoneCurried = memoize((setProjects: Function) => (task: Task) =>
   markAsDone(task, setProjects)
 );
 
+const reorderCurried = memoize(
+  (project: Project, setProjects: Function) => (tasks: Task[]) =>
+    reorder(project, tasks, setProjects)
+);
+
 const ProjectList: FC<Props> = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   useEffect(() => {
@@ -36,6 +47,7 @@ const ProjectList: FC<Props> = () => {
           project={project}
           onCreateTask={createTaskCurried(setProjects)}
           onDone={markAsDoneCurried(setProjects)}
+          onReorder={reorderCurried(project, setProjects)}
         />
       ))}
       <div className="card">

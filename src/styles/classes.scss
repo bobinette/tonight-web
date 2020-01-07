@@ -1,6 +1,10 @@
 @import 'styles/colors.scss';
 @import 'styles/variables.scss';
 
+// .red {
+//   background: lightblue;
+// }
+
 .w-100 {
   width: 100%;
 }
@@ -15,6 +19,10 @@
 
 .margin-top-small {
   margin-top: $margin-small;
+}
+
+.padding {
+  padding: $padding;
 }
 
 .muted {
@@ -34,8 +42,33 @@
   padding-right: $padding-xsmall;
 }
 
+.hover-parent {
+  visibility: hidden;
+}
+
 .list-element {
-  margin: $margin 0;
+  padding: $padding;
+  border-radius: $border-radius-large;
+
+  &:hover:not(.dragging-other) {
+    background-color: $background;
+  }
+
+  &.dragging {
+    background-color: $background;
+
+    .dnd-handle {
+      color: $color;
+    }
+  }
+
+  .dnd-handle {
+    color: $grey-lightisher;
+
+    &:hover {
+      color: $color;
+    }
+  }
 }
 
 /*
