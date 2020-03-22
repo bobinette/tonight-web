@@ -13,6 +13,10 @@
   text-align: right;
 }
 
+.margin-v {
+  margin: $margin 0;
+}
+
 .margin-top {
   margin-top: $margin;
 }
@@ -25,8 +29,12 @@
   padding: $padding;
 }
 
+.padding-v {
+  padding: $padding 0;
+}
+
 .muted {
-  color: $grey-blue-light;
+  color: $muted;
 }
 
 .success {
@@ -87,6 +95,13 @@ Card
   box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.1);
 }
 
+a.card {
+  display: block;
+  &:hover {
+    box-shadow: 0 0px 4px 0 rgba(0, 0, 0, 0.15);
+  }
+}
+
 /*
 Buttons
 */
@@ -121,7 +136,11 @@ Buttons
 
   padding: 5px 10px;
 
-  &:hover {
+  &:disabled {
+    background-color: $grey-blue-light;
+  }
+
+  &:hover:not(:disabled) {
     background: $primary-darker;
   }
 }
@@ -134,7 +153,11 @@ Buttons
 
   background: transparent;
 
-  &:hover {
+  &:disabled {
+    color: $grey-blue-light;
+  }
+
+  &:hover:not(:disabled) {
     color: $color;
   }
 }

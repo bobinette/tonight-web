@@ -13,15 +13,16 @@ const ProjectCard: FC<Props> = ({ project }) => {
     [project]
   );
   return (
-    <Link to={`projects/${project.slug}`}>
-      <div className="card">
-        <div className="flex-full-row">
-          <strong>{project.name}</strong>
-          <div>
-            {doneTasksCount} / {project.tasks.length || 0} tasks
-          </div>
+    <Link to={`projects/${project.slug}`} className="card">
+      <div className="flex-full-row">
+        <strong>{project.name}</strong>
+        <div>
+          {doneTasksCount} / {project.tasks.length || 0} tasks
         </div>
       </div>
+      {project.description && (
+        <div className="margin-top">{project.description}</div>
+      )}
     </Link>
   );
 };

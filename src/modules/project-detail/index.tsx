@@ -1,17 +1,21 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
+
+import EditableTextArea from 'components/editables/textarea';
+
+import { createTask, markAsDone, reorder } from 'modules/projects/api';
+import TaskList from 'modules/tasks-list';
+
 import { Project, Task } from 'types';
 
-import { list, createTask, markAsDone, reorder } from 'modules/projects/api';
-import TaskList from 'modules/tasks-list';
-import { Link } from 'react-router-dom';
+import { find, update } from './api';
 
 const loadProject = async (setProject: Function, slug?: string) => {
   if (!slug) {
     return;
   }
-  const projects = await list();
-  const project = projects.find(p => p.slug === slug);
+  const project = await find(slug);
   setProject(project);
 };
 
@@ -25,6 +29,17 @@ const ProjectDetail = () => {
 
   const doneTasks = useMemo(
     () => project?.tasks.filter((t: Task) => t.status === 'DONE') || [],
+    [project]
+  );
+
+  const onChangeDescription = useCallback(
+    async (description: string) => {
+      if (project) {
+        const newProject = { ...project, description };
+        await update(newProject);
+        setProject(newProject);
+      }
+    },
     [project]
   );
 
@@ -61,10 +76,18 @@ const ProjectDetail = () => {
     return <div>LOADING?</div>;
   }
 
+  console.log(project.description);
   return (
     <div>
       <h1>{project.name}</h1>
       <Link to="/">Back</Link>
+      <div className="card">
+        <EditableTextArea
+          value={project.description || ''}
+          onChange={onChangeDescription}
+          placeholder="Add a description to your project..."
+        />
+      </div>
       <div className="card">
         <div className="flex-full-row">
           <strong>Tasks</strong>

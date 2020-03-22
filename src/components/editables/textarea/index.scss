@@ -1,0 +1,31 @@
+@import 'styles/colors.scss';
+@import 'styles/variables.scss';
+
+.Editable {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+
+  .Editable__plain {
+    cursor: text;
+  }
+
+  textarea {
+    font-size: inherit;
+    flex: 1;
+    border: 1px solid $grey-light;
+    border-radius: $border-radius;
+    resize: vertical;
+    outline: none;
+    padding: $padding;
+
+    &::placeholder {
+      color: $muted;
+      font-style: italic;
+    }
+
+    &:focus {
+      border-color: $primary;
+    }
+  }
+}
