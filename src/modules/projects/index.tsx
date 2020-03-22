@@ -1,60 +1,32 @@
-import React, { FC, useState, useEffect } from 'react';
-import { memoize } from 'lodash';
+import React, { FC, useState, useEffect, useCallback } from 'react';
 
-import { Project, Task } from 'types';
+import { Project } from 'types';
 
-import {
-  createProject,
-  loadProjects,
-  createTask,
-  markAsDone,
-  reorder,
-} from './actions';
+import { createProject, loadProjects } from './actions';
 import CreateButton from './create-button';
 import ProjectCard from './project-card';
 
 interface Props {}
-
-const createProjectCurried = memoize(
-  (setProjects: Function) => (project: Project) =>
-    createProject(project, setProjects)
-);
-
-const createTaskCurried = memoize((setProjects: Function) => (task: Task) =>
-  createTask(task, setProjects)
-);
-
-const markAsDoneCurried = memoize((setProjects: Function) => (task: Task) =>
-  markAsDone(task, setProjects)
-);
-
-const reorderCurried = memoize(
-  (project: Project, setProjects: Function) => (tasks: Task[]) =>
-    reorder(project, tasks, setProjects)
-);
 
 const ProjectList: FC<Props> = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   useEffect(() => {
     loadProjects(setProjects);
   }, []);
+  const onCreate = useCallback(
+    (project: Project) => {
+      createProject(project, setProjects);
+    },
+    [setProjects]
+  );
 
   return (
     <>
       {projects.map(project => (
-        <ProjectCard
-          key={project.uuid!}
-          project={project}
-          onCreateTask={createTaskCurried(setProjects)}
-          onDone={markAsDoneCurried(setProjects)}
-          onReorder={reorderCurried(project, setProjects)}
-        />
+        <ProjectCard key={project.uuid!} project={project} />
       ))}
       <div className="card">
-        <CreateButton
-          className="w-100"
-          onCreate={createProjectCurried(setProjects)}
-        />
+        <CreateButton className="w-100" onCreate={onCreate} />
       </div>
     </>
   );

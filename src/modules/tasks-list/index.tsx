@@ -15,7 +15,7 @@ interface Props {
 const onKeyPress = (onCreate: Function) => (
   event: React.KeyboardEvent<HTMLInputElement>
 ) => {
-  if (event.key == 'Enter') {
+  if (event.key === 'Enter') {
     onCreate();
   }
 };
@@ -98,7 +98,7 @@ const TaskList: FC<Props> = ({ project, onCreate, onDone, onReorder }) => {
                       <div>
                         {task.status === 'DONE' ? (
                           <i className="material-icons left-icon success">
-                            check_circle
+                            check_box
                           </i>
                         ) : (
                           <button
@@ -106,7 +106,7 @@ const TaskList: FC<Props> = ({ project, onCreate, onDone, onReorder }) => {
                             onClick={() => onDone(task)}
                           >
                             <i className="material-icons left-icon">
-                              radio_button_unchecked
+                              check_box_outline_blank
                             </i>
                           </button>
                         )}
@@ -135,23 +135,21 @@ const TaskList: FC<Props> = ({ project, onCreate, onDone, onReorder }) => {
           )}
         </Droppable>
       </DragDropContext>
-      <div className="padding">
-        <div className="flex-aligned">
-          <i className="material-icons left-icon">add_circle_outline</i>
-          <input
-            className="input-text-phantom w-100"
-            value={newTaskTitle}
-            onChange={e => setNewTaskTitle(e.target.value)}
-            onKeyPress={onKeyPress(() => {
-              onCreate(newTask(newTaskTitle, project));
-              setNewTaskTitle('');
-            })}
-            placeholder="New task..."
-          />
-        </div>
-        <div className="w-100 align-right">
-          <small className="muted">Press return to create</small>
-        </div>
+      <div className="flex-aligned input-wrapper margin-top-small">
+        <i className="material-icons left-icon input-icon">add_box</i>
+        <input
+          className="input-text-phantom w-100"
+          value={newTaskTitle}
+          onChange={e => setNewTaskTitle(e.target.value)}
+          onKeyPress={onKeyPress(() => {
+            onCreate(newTask(newTaskTitle, project));
+            setNewTaskTitle('');
+          })}
+          placeholder="New task..."
+        />
+      </div>
+      <div className="w-100 align-right">
+        <small className="muted">Press return to create</small>
       </div>
     </>
   );

@@ -13,3 +13,12 @@ li {
   border-bottom: 1px solid $border-color;
   padding: $padding;
 }
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+h1 {
+  margin: 0;
+}

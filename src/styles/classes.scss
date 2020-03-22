@@ -115,7 +115,7 @@ Buttons
   @extend .button;
 
   border: 0;
-  border-radius: $border-radius;
+  border-radius: $border-radius-small;
   color: $secondary-background;
   background: $primary;
 
@@ -164,7 +164,6 @@ Inputs
 */
 
 .input-label {
-  margin-top: $margin;
   margin-bottom: $margin-small;
 }
 
@@ -188,10 +187,12 @@ Inputs
 
 .input-text-phantom {
   @extend .input-text;
+  background: transparent;
 
   border-left: 0;
   border-top: 0;
   border-right: 0;
+  border-bottom: 0;
   border-radius: 0;
   padding-left: 0;
   padding-right: 0;
@@ -200,6 +201,26 @@ Inputs
     border-left: 0;
     border-top: 0;
     border-right: 0;
+    border-bottom: 0;
+  }
+}
+
+.input-icon {
+  transition: $transition;
+}
+
+.input-wrapper {
+  transition: $transition;
+  padding: $padding-small $padding;
+  border: 1px solid $grey-light;
+  border-radius: $border-radius;
+
+  &:focus-within {
+    border-color: $primary;
+
+    .input-icon {
+      color: $primary;
+    }
   }
 }
 

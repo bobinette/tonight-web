@@ -1,6 +1,7 @@
 export interface Project {
   uuid: string | null;
   name: string;
+  slug: string;
 
   tasks: Task[];
 }
@@ -8,6 +9,7 @@ export interface Project {
 export const newProject = (name: string): Project => ({
   uuid: null,
   name,
+  slug: '',
   tasks: [],
 });
 
