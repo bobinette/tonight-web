@@ -260,9 +260,18 @@ Flex
   align-items: center;
 }
 
+.flex-baseline {
+  @extend .flex;
+  align-items: baseline;
+}
+
 .flex-full-row {
   @extend .flex-aligned;
   justify-content: space-between;
+}
+
+.flex-1 {
+  flex: 1;
 }
 
 /*

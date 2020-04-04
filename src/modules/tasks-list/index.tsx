@@ -1,13 +1,16 @@
 /* tslint:disable */
-import React, { FC, useState, useEffect } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import React, { FC, useState, useEffect, useCallback } from 'react';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import { Project, Task, newTask } from 'types';
+
+import TaskRow from './row';
 
 interface Props {
   project: Project;
 
   onCreate(task: Task): void;
+  onUpdate(task: Task): Promise<void>;
   onDone(task: Task): void;
   onReorder(tasks: Task[]): void;
 }
@@ -49,12 +52,24 @@ const onDragEnd = (
   onReorder(reordered);
 };
 
-const TaskList: FC<Props> = ({ project, onCreate, onDone, onReorder }) => {
+const TaskList: FC<Props> = ({
+  project,
+  onCreate,
+  onDone,
+  onReorder,
+  onUpdate,
+}) => {
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [dragging, setDragging] = useState(false);
   const [tasks, setTasks] = useState(project.tasks || []);
 
   useEffect(() => setTasks(project.tasks || []), [project]);
+  const onDoneTask = useCallback(
+    async (task: Task) => {
+      onDone(task);
+    },
+    [onDone]
+  );
 
   return (
     <>
@@ -77,58 +92,14 @@ const TaskList: FC<Props> = ({ project, onCreate, onDone, onReorder }) => {
               className={dragging ? 'red' : ''}
             >
               {tasks.map((task: Task, index) => (
-                <Draggable
-                  key={task.uuid!}
-                  draggableId={task.uuid!}
+                <TaskRow
+                  key={task.uuid || index}
+                  dragging={dragging}
+                  task={task}
                   index={index}
-                >
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      style={provided.draggableProps.style}
-                      className={`list-element flex-full-row ${
-                        snapshot.isDragging
-                          ? 'dragging'
-                          : dragging
-                          ? 'dragging-other'
-                          : ''
-                      }`}
-                    >
-                      <div>
-                        {task.status === 'DONE' ? (
-                          <i className="material-icons left-icon success">
-                            check_box
-                          </i>
-                        ) : (
-                          <button
-                            className="button-phantom"
-                            onClick={() => onDone(task)}
-                          >
-                            <i className="material-icons left-icon">
-                              check_box_outline_blank
-                            </i>
-                          </button>
-                        )}
-                        <span
-                          className={`${
-                            task.status === 'DONE' ? 'success' : ''
-                          }`}
-                        >
-                          {task.title}
-                        </span>
-                      </div>
-                      <div>
-                        <i
-                          className={`material-icons dnd-handle`}
-                          {...provided.dragHandleProps}
-                        >
-                          reorder
-                        </i>
-                      </div>
-                    </div>
-                  )}
-                </Draggable>
+                  onUpdate={onUpdate}
+                  onDone={onDoneTask}
+                />
               ))}
               {provided.placeholder}
             </div>

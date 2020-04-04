@@ -7,6 +7,7 @@
   flex-flow: column;
 
   .Editable__plain {
+    min-height: 1rem;
     cursor: text;
   }
 

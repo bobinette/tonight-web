@@ -9,7 +9,7 @@ import TaskList from 'modules/tasks-list';
 
 import { Project, Task } from 'types';
 
-import { find, update } from './api';
+import { find, update, updateTask } from './api';
 
 const loadProject = async (setProject: Function, slug?: string) => {
   if (!slug) {
@@ -67,6 +67,13 @@ const ProjectDetail = () => {
     },
     [project, setProject, slug]
   );
+  const onUpdate = useCallback(
+    async (task: Task) => {
+      await updateTask(task);
+      await loadProject(setProject, slug);
+    },
+    [setProject, slug]
+  );
 
   if (!slug) {
     return <div>invalid slug</div>;
@@ -76,7 +83,6 @@ const ProjectDetail = () => {
     return <div>LOADING?</div>;
   }
 
-  console.log(project.description);
   return (
     <div>
       <h1>{project.name}</h1>
@@ -99,6 +105,7 @@ const ProjectDetail = () => {
           project={project}
           onDone={onDone}
           onCreate={onCreate}
+          onUpdate={onUpdate}
           onReorder={onReorder}
         />
       </div>

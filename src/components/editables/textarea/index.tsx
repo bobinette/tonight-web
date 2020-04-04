@@ -64,8 +64,8 @@ const EditableTextArea = ({
       onClick={onSetEditing}
     >
       {!editing && (
-        <div className="Editable__plain">
-          {value || <em className="muted">{placeholder}</em>}
+        <div className="Editable__plain w-100">
+          {value || <em className="muted w-100">{placeholder}</em>}
         </div>
       )}
       {editing && (
