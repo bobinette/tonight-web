@@ -172,6 +172,11 @@ Buttons
   font-weight: inherit;
   font-family: 'Roboto', sans-serif;
   text-align: inherit;
+
+  &:focus {
+    outline: 0;
+    text-decoration: none;
+  }
 }
 
 .button-group {
@@ -255,7 +260,7 @@ Flex
   display: flex;
 }
 
-.flex-aligned {
+.flex-center {
   @extend .flex;
   align-items: center;
 }
@@ -266,7 +271,7 @@ Flex
 }
 
 .flex-full-row {
-  @extend .flex-aligned;
+  @extend .flex-center;
   justify-content: space-between;
 }
 

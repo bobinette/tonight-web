@@ -6,7 +6,7 @@ import EditableTextArea from 'components/editables/textarea';
 
 import { createTask, markAsDone, reorder } from 'modules/projects/api';
 
-import { Project, Task, newRelease } from 'types';
+import { Project, Task } from 'types';
 
 import { find, update, updateTask, createRelease } from './api';
 import ReleaseBlock from './release-block';

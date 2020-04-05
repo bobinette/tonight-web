@@ -103,7 +103,7 @@ const TaskList: FC<Props> = ({
           )}
         </Droppable>
       </DragDropContext>
-      <div className="flex-aligned input-wrapper margin-top-small">
+      <div className="flex-center input-wrapper margin-top-small">
         <i className="material-icons left-icon input-icon">add_box</i>
         <input
           className="input-text-phantom w-100"

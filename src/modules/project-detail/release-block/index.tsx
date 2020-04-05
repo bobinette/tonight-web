@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
 
+import { useToggle } from 'hooks';
 import { Release, Task } from 'types';
 
 import TaskList from './task-list';
@@ -20,6 +21,8 @@ const ReleaseBlock = ({
   onDone,
   onReorder,
 }: Props) => {
+  const [collapsed, collapse] = useToggle(false);
+
   const doneTasks = useMemo(
     () => release.tasks.filter(t => t.status === 'DONE'),
     [release]
@@ -30,19 +33,30 @@ const ReleaseBlock = ({
   );
   return (
     <div className="card">
-      <div className="flex-full-row">
-        <strong>{release.title}</strong>
-        <div>
-          {doneTasks.length} / {release.tasks.length} tasks
+      <button className="button-phantom w-100" onClick={collapse}>
+        <div className="flex-full-row">
+          <div>
+            <strong>{release.title}</strong>
+          </div>
+          <div className="flex-center">
+            <span>
+              {doneTasks.length} / {release.tasks.length} tasks
+            </span>
+            <i className="material-icons">
+              {collapsed ? 'expand_more' : 'expand_less'}
+            </i>
+          </div>
         </div>
-      </div>
-      <TaskList
-        tasks={release.tasks}
-        onDone={onDone}
-        onCreate={onCreateTask}
-        onUpdate={onUpdate}
-        onReorder={onReorder}
-      />
+      </button>
+      {!collapsed && (
+        <TaskList
+          tasks={release.tasks}
+          onDone={onDone}
+          onCreate={onCreateTask}
+          onUpdate={onUpdate}
+          onReorder={onReorder}
+        />
+      )}
     </div>
   );
 };

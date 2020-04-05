@@ -1,23 +1,37 @@
-$color: #454851;
+$black: #000000;
+$grey: #d0d4d9;
+$white: #ffffff;
 
-$grey-dark: #7a7b7c;
+// Dark greys
+$grey-dark: scale-color($grey, $lightness: -30%);
+$grey-darker: scale-color($grey, $lightness: -60%);
+$grey-darkest: scale-color($grey, $lightness: -70%);
+
+// Light greys
 $grey-light: #bdbec1;
 $grey-lightish: #d3d3d5;
 $grey-lightisher: #e4e4e5;
 $grey-lighter: #f4f5f5;
 $grey-lightest: #f8f9f9;
-$white: #ffffff;
 
 $grey-blue-light: #b3bbd4;
 $grey-blue-lighter: #f0f4fa;
 
-$primary: #1e88e5;
-$primary-darker: #1565c0;
-$primary-disabled: #5e6975;
+$blue: #42a5f5;
+$green: #4db6ac;
+$orange: #ffca28;
+$red: #ef5350;
+$purple: #7986cb;
 
-$success: #4caf50;
-$warning: #f08a12;
+$primary: $blue;
+$primary-darker: scale-color($primary, $lightness: -30%);
+$primary-disabled: $grey-dark;
 
+$success: $green;
+$warning: $orange;
+$danger: $red;
+
+$color: $grey-darkest;
 $background: $grey-blue-lighter;
 $secondary-background: $white;
 

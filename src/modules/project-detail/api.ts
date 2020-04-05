@@ -1,6 +1,6 @@
 import api from 'api';
 
-import { Project, Task, Release } from 'types';
+import { Project, Task } from 'types';
 
 export const update = async (project: Project): Promise<Project> => {
   const resp = await api.post(`/projects/${project.uuid}`, project);
