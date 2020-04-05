@@ -13,8 +13,15 @@ export const list = async (): Promise<Project[]> => {
   return tasks;
 };
 
-export const createTask = async (task: Task): Promise<Task> => {
-  const resp = await api.post('/tasks', task);
+export const createTask = async (
+  task: Task,
+  projectUuid: string,
+  releaseUuid: string
+): Promise<Task> => {
+  const resp = await api.post(
+    `/projects/${projectUuid}/releases/${releaseUuid}/tasks`,
+    task
+  );
   return resp.data.data;
 };
 

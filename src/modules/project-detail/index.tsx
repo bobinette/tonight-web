@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 
 import EditableTextArea from 'components/editables/textarea';
 
 import { createTask, markAsDone, reorder } from 'modules/projects/api';
-import TaskList from 'modules/tasks-list';
 
-import { Project, Task } from 'types';
+import { Project, Task, newRelease } from 'types';
 
-import { find, update, updateTask } from './api';
+import { find, update, updateTask, createRelease } from './api';
+import ReleaseBlock from './release-block';
 
 const loadProject = async (setProject: Function, slug?: string) => {
   if (!slug) {
@@ -26,11 +26,6 @@ const ProjectDetail = () => {
   useEffect(() => {
     loadProject(setProject, slug);
   }, [setProject, slug]);
-
-  const doneTasks = useMemo(
-    () => project?.tasks.filter((t: Task) => t.status === 'DONE') || [],
-    [project]
-  );
 
   const onChangeDescription = useCallback(
     async (description: string) => {
@@ -51,11 +46,15 @@ const ProjectDetail = () => {
     [setProject, slug]
   );
   const onCreate = useCallback(
-    async (task: Task) => {
-      await createTask(task);
+    async (task: Task, releaseUuid: string) => {
+      if (!project) {
+        return;
+      }
+
+      await createTask(task, project.uuid!, releaseUuid);
       await loadProject(setProject, slug);
     },
-    [setProject, slug]
+    [project, setProject, slug]
   );
   const onReorder = useCallback(
     async (tasks: Task[]) => {
@@ -73,6 +72,15 @@ const ProjectDetail = () => {
       await loadProject(setProject, slug);
     },
     [setProject, slug]
+  );
+  const onCreateRelease = useCallback(
+    async (title: string) => {
+      if (project) {
+        await createRelease(title, project.uuid!);
+        await loadProject(setProject, slug);
+      }
+    },
+    [project, setProject, slug]
   );
 
   if (!slug) {
@@ -94,19 +102,21 @@ const ProjectDetail = () => {
           placeholder="Add a description to your project..."
         />
       </div>
-      <div className="card">
-        <div className="flex-full-row">
-          <strong>Tasks</strong>
-          <div>
-            {doneTasks.length} / {project.tasks.length} tasks
-          </div>
-        </div>
-        <TaskList
-          project={project}
+      {project.releases.map(release => (
+        <ReleaseBlock
+          key={release.uuid}
+          release={release}
           onDone={onDone}
           onCreate={onCreate}
           onUpdate={onUpdate}
           onReorder={onReorder}
+        />
+      ))}
+      <div className="card">
+        <EditableTextArea
+          value=""
+          placeholder="Click to create a new release"
+          onChange={onCreateRelease}
         />
       </div>
     </div>

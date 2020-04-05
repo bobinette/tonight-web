@@ -1,3 +1,7 @@
+export interface UUIDed {
+  uuid: string | null;
+}
+
 export interface Project {
   uuid: string | null;
   name: string;
@@ -5,13 +9,31 @@ export interface Project {
 
   description?: string;
 
-  tasks: Task[];
+  releases: Release[];
 }
 
 export const newProject = (name: string): Project => ({
   uuid: null,
   name,
   slug: '',
+  releases: [],
+});
+
+export interface Release {
+  uuid: string;
+  title: string;
+  description: string;
+
+  project: Partial<Project>;
+  tasks: Task[];
+}
+
+export const newRelease = (title: string): Release => ({
+  uuid: '',
+  title,
+  description: '',
+
+  project: {},
   tasks: [],
 });
 
@@ -20,12 +42,12 @@ export interface Task {
   title: string;
   status: string;
 
-  project: Project;
+  release: Partial<Release>;
 }
 
-export const newTask = (title: string, project: Project): Task => ({
+export const newTask = (title: string): Task => ({
   uuid: null,
   title,
-  project,
+  release: {},
   status: 'TODO',
 });

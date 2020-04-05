@@ -1,13 +1,13 @@
 /* tslint:disable */
-import React, { FC, useState, useEffect, useCallback } from 'react';
+import React, { FC, useState, useCallback } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
-import { Project, Task, newTask } from 'types';
+import { Task, newTask } from 'types';
 
 import TaskRow from './row';
 
 interface Props {
-  project: Project;
+  tasks: Task[];
 
   onCreate(task: Task): void;
   onUpdate(task: Task): Promise<void>;
@@ -53,7 +53,7 @@ const onDragEnd = (
 };
 
 const TaskList: FC<Props> = ({
-  project,
+  tasks,
   onCreate,
   onDone,
   onReorder,
@@ -61,9 +61,7 @@ const TaskList: FC<Props> = ({
 }) => {
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [dragging, setDragging] = useState(false);
-  const [tasks, setTasks] = useState(project.tasks || []);
 
-  useEffect(() => setTasks(project.tasks || []), [project]);
   const onDoneTask = useCallback(
     async (task: Task) => {
       onDone(task);
@@ -77,7 +75,6 @@ const TaskList: FC<Props> = ({
         onDragEnd={onDragEnd(
           tasks,
           (tasks: Task[]) => {
-            setTasks(tasks);
             onReorder(tasks);
           },
           setDragging
@@ -113,7 +110,7 @@ const TaskList: FC<Props> = ({
           value={newTaskTitle}
           onChange={e => setNewTaskTitle(e.target.value)}
           onKeyPress={onKeyPress(() => {
-            onCreate(newTask(newTaskTitle, project));
+            onCreate(newTask(newTaskTitle));
             setNewTaskTitle('');
           })}
           placeholder="New task..."
