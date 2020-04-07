@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 
 import Portal from 'components/portal';
@@ -15,22 +15,21 @@ interface Props {
 }
 
 const Menu = ({ items }: Props) => {
+  const [position, setPosition] = useState({ top: 0, right: 0 });
+
   const [menuVisible, setMenuVisible] = useState(false);
-  const toggleMenu = useCallback(() => {
-    setMenuVisible(!menuVisible);
-  }, [menuVisible, setMenuVisible]);
 
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [position, setPosition] = useState({ top: 0, right: 0 });
-  useEffect(() => {
+  const toggleMenu = useCallback(() => {
     if (buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
       setPosition({
-        top: rect.bottom,
+        top: rect.bottom + window.pageYOffset,
         right: window.innerWidth - rect.right,
       });
     }
-  }, [buttonRef]);
+    setMenuVisible(!menuVisible);
+  }, [menuVisible, setMenuVisible]);
 
   const menuRef = useRef(null);
   useOnclickOutside([buttonRef, menuRef], () => {
