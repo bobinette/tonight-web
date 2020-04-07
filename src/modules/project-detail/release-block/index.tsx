@@ -12,6 +12,7 @@ interface Props {
   onUpdate(task: Task): Promise<void>;
   onDone(task: Task): void;
   onReorder(tasks: Task[]): void;
+  onDeleteTask(task: Task): Promise<void>;
 }
 
 const ReleaseBlock = ({
@@ -20,6 +21,7 @@ const ReleaseBlock = ({
   onUpdate,
   onDone,
   onReorder,
+  onDeleteTask,
 }: Props) => {
   const [collapsed, collapse] = useToggle(false);
 
@@ -55,6 +57,7 @@ const ReleaseBlock = ({
           onCreate={onCreateTask}
           onUpdate={onUpdate}
           onReorder={onReorder}
+          onDeleteTask={onDeleteTask}
         />
       )}
     </div>

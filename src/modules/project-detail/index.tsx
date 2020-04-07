@@ -8,7 +8,7 @@ import { createTask, markAsDone, reorder } from 'modules/projects/api';
 
 import { Project, Task } from 'types';
 
-import { find, update, updateTask, createRelease } from './api';
+import { find, update, updateTask, createRelease, deleteRelease } from './api';
 import ReleaseBlock from './release-block';
 
 const loadProject = async (setProject: Function, slug?: string) => {
@@ -82,6 +82,15 @@ const ProjectDetail = () => {
     },
     [project, setProject, slug]
   );
+  const onDeleteTask = useCallback(
+    async (task: Task) => {
+      if (project) {
+        await deleteRelease(task.uuid!);
+        await loadProject(setProject, slug);
+      }
+    },
+    [project, setProject, slug]
+  );
 
   if (!slug) {
     return <div>invalid slug</div>;
@@ -110,6 +119,7 @@ const ProjectDetail = () => {
           onCreate={onCreate}
           onUpdate={onUpdate}
           onReorder={onReorder}
+          onDeleteTask={onDeleteTask}
         />
       ))}
       <div className="card">

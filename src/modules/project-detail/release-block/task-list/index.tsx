@@ -13,6 +13,7 @@ interface Props {
   onUpdate(task: Task): Promise<void>;
   onDone(task: Task): void;
   onReorder(tasks: Task[]): void;
+  onDeleteTask(task: Task): Promise<void>;
 }
 
 const onKeyPress = (onCreate: Function) => (
@@ -58,6 +59,7 @@ const TaskList: FC<Props> = ({
   onDone,
   onReorder,
   onUpdate,
+  onDeleteTask,
 }) => {
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [dragging, setDragging] = useState(false);
@@ -96,6 +98,7 @@ const TaskList: FC<Props> = ({
                   index={index}
                   onUpdate={onUpdate}
                   onDone={onDoneTask}
+                  onDelete={onDeleteTask}
                 />
               ))}
               {provided.placeholder}

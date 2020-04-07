@@ -33,6 +33,10 @@
   padding: $padding 0;
 }
 
+.padding-h {
+  padding: 0 $padding;
+}
+
 .muted {
   color: $muted;
 }
@@ -102,6 +106,10 @@ a.card {
   }
 }
 
+.hoverable-item:hover {
+  background: $background;
+}
+
 /*
 Buttons
 */
@@ -152,6 +160,20 @@ Buttons
   color: $grey-dark;
 
   background: transparent;
+
+  &:disabled {
+    color: $grey-blue-light;
+  }
+
+  &:hover:not(:disabled) {
+    color: $color;
+  }
+}
+
+.button-icon {
+  @extend .button-link;
+
+  color: $grey-lightisher;
 
   &:disabled {
     color: $grey-blue-light;

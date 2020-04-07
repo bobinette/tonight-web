@@ -1,0 +1,21 @@
+@import 'styles/colors.scss';
+@import 'styles/variables.scss';
+
+.relative {
+  position: relative;
+}
+
+.popover-items {
+  min-width: 120px;
+
+  position: absolute;
+  top: 0px;
+  right: 0px;
+
+  background: $white;
+  padding: $padding 0;
+
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.1);
+}

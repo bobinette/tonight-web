@@ -15,7 +15,13 @@ export const post = (
   config?: AxiosRequestConfig
 ): Promise<AxiosResponse<any>> => axios.post(`${baseUrl}${path}`, data, config);
 
+export const deleteFunc = (
+  path: string,
+  config?: AxiosRequestConfig
+): Promise<AxiosResponse<any>> => axios.delete(`${baseUrl}${path}`, config);
+
 export default {
   get,
   post,
+  delete: deleteFunc,
 };

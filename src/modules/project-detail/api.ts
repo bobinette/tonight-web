@@ -29,3 +29,7 @@ export const createRelease = async (
 export const updateTask = async (task: Task) => {
   await api.post(`/tasks/${task.uuid}`, task);
 };
+
+export const deleteRelease = async (taskUuid: string) => {
+  await api.delete(`/tasks/${taskUuid}`);
+};
