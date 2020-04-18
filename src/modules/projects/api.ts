@@ -14,14 +14,18 @@ export const list = async (): Promise<Project[]> => {
 };
 
 export const createTask = async (
-  task: Task,
+  task: Partial<Task>,
   projectUuid: string,
   releaseUuid: string
 ): Promise<Task> => {
-  const resp = await api.post(
-    `/projects/${projectUuid}/releases/${releaseUuid}/tasks`,
-    task
-  );
+  const resp = await api.post(`/tasks`, {
+    ...task,
+    release: {
+      ...task.release,
+      uuid: releaseUuid,
+      project: { ...task.release?.project, uuid: projectUuid },
+    },
+  });
   return resp.data.data;
 };
 
